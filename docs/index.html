@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Irkutsk Flight Watch</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f6f5f2; --surface: #fcfcfb; --border: #e3e2dd;
+    --text: #0b0b0b; --text-2: #52514e; --muted: #8a8984; --grid: #ecebe7;
+    --flights: #2a78d6; --cancelled: #eb6834; --baseline: #52514e;
+    --ok: #1d7a3e; --ok-bg: #e5f3e9; --watch: #9a6400; --watch-bg: #fbf0d9;
+    --alert: #b42318; --alert-bg: #fde7e4; --info: #52514e; --info-bg: #ecebe7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #121211; --surface: #1a1a19; --border: #2e2e2c;
+      --text: #ffffff; --text-2: #c3c2b7; --muted: #8f8e86; --grid: #262624;
+      --flights: #3987e5; --cancelled: #d95926; --baseline: #c3c2b7;
+      --ok: #6fcf8e; --ok-bg: #16301f; --watch: #f0b84a; --watch-bg: #33270e;
+      --alert: #ff8a7a; --alert-bg: #3a1714; --info: #c3c2b7; --info-bg: #262624;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #121211; --surface: #1a1a19; --border: #2e2e2c;
+    --text: #ffffff; --text-2: #c3c2b7; --muted: #8f8e86; --grid: #262624;
+    --flights: #3987e5; --cancelled: #d95926; --baseline: #c3c2b7;
+    --ok: #6fcf8e; --ok-bg: #16301f; --watch: #f0b84a; --watch-bg: #33270e;
+    --alert: #ff8a7a; --alert-bg: #3a1714; --info: #c3c2b7; --info-bg: #262624;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1080px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 22px; margin: 0 0 4px; letter-spacing: -0.01em; }
+  h2 { font-size: 15px; margin: 0 0 12px; }
+  .sub { color: var(--text-2); margin: 0 0 20px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+  .status { display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap; }
+  .badge { display: inline-flex; align-items: center; gap: 8px; font-weight: 650; font-size: 16px;
+           padding: 8px 14px; border-radius: 8px; white-space: nowrap; }
+  .lvl-normal { color: var(--ok); background: var(--ok-bg); }
+  .lvl-watch { color: var(--watch); background: var(--watch-bg); }
+  .lvl-alert { color: var(--alert); background: var(--alert-bg); }
+  .lvl-learning, .lvl-data, .lvl-missing { color: var(--info); background: var(--info-bg); }
+  .reason { flex: 1 1 280px; }
+  .reason p { margin: 0 0 4px; }
+  .meta { color: var(--muted); font-size: 12px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+  .chart-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .chart-head span { color: var(--text-2); font-size: 12px; }
+  svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .axis text { fill: var(--muted); font-size: 10px; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; color: var(--text-2); font-size: 12px; margin-bottom: 12px; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+  .legend i.line { height: 0; border-top: 2px dashed var(--baseline); border-radius: 0; width: 14px; }
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  th { color: var(--text-2); font-weight: 600; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .tip { position: fixed; pointer-events: none; background: var(--surface); color: var(--text);
+         border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; font-size: 12px;
+         box-shadow: 0 4px 16px rgba(0,0,0,.12); z-index: 10; max-width: 260px; }
+  .empty { color: var(--text-2); }
+  details summary { cursor: pointer; color: var(--text-2); }
+  a { color: var(--flights); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Irkutsk Flight Watch</h1>
+  <p class="sub">Flights in and out of Irkutsk (IKT), compared with its own recent baseline and with nearby airports as a control for weather and airspace closures.</p>
+
+  <section class="card" id="status"><p class="empty">Loading…</p></section>
+  <section class="card" id="intraday" hidden></section>
+
+  <section class="card">
+    <div class="chart-head"><h2>Daily flights, last 60 days</h2><span>Scheduled passenger flights (arrivals + departures, codeshares removed)</span></div>
+    <div class="legend">
+      <span><i style="background:var(--flights)"></i>Not cancelled</span>
+      <span><i style="background:var(--cancelled)"></i>Cancelled</span>
+      <span><i class="line"></i>Baseline (trailing median)</span>
+    </div>
+    <div class="grid" id="charts"></div>
+  </section>
+
+  <section class="card">
+    <h2>Latest day by airport</h2>
+    <div class="table-wrap"><table id="latest"></table></div>
+  </section>
+
+  <section class="card">
+    <h2>Recent notifications</h2>
+    <div class="table-wrap"><table id="alerts"></table></div>
+  </section>
+
+  <section class="card">
+    <details>
+      <summary>How alerts work</summary>
+      <p>Each night (about 02:15 Irkutsk time) the monitor fetches the previous day's full schedule and flight statuses for every airport from AeroDataBox. For each airport it computes the number of scheduled flights and the share cancelled, then compares both with that airport's trailing median.</p>
+      <ul>
+        <li><b>Volume drop</b>: scheduled flights fall below <span id="t-vol"></span> of the usual number. This catches airlines quietly pulling flights from the schedule, which never shows up as a "cancellation".</li>
+        <li><b>Cancellation spike</b>: at least <span id="t-minc"></span> cancellations, a cancellation rate at least <span id="t-exc"></span> points above normal, and well outside normal day-to-day noise.</li>
+      </ul>
+      <p><b>ALERT</b> means Irkutsk is anomalous and the control airports are not. <b>WATCH</b> means Irkutsk is anomalous but so is the region, which is more likely weather or an airspace closure. A weekly check-in notification confirms the monitor is still running.</p>
+      <p class="meta" id="budget"></p>
+    </details>
+  </section>
+</main>
+<div class="tip" id="tip" hidden></div>
+
+<script>
+const LEVEL = {
+  normal:   { icon: "✓", label: "Normal" },
+  watch:    { icon: "⚠", label: "Watch" },
+  alert:    { icon: "▲", label: "Alert" },
+  learning: { icon: "…", label: "Building baseline" },
+  data:     { icon: "?", label: "Data problem" },
+  missing:  { icon: "?", label: "No data" },
+};
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const pct = x => x == null ? "–" : Math.round(x * 100) + "%";
+const tip = document.getElementById("tip");
+function showTip(e, html) {
+  tip.innerHTML = html; tip.hidden = false;
+  const r = tip.getBoundingClientRect();
+  let x = e.clientX + 14, y = e.clientY + 14;
+  if (x + r.width > innerWidth - 8) x = e.clientX - r.width - 14;
+  if (y + r.height > innerHeight - 8) y = e.clientY - r.height - 14;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+const hideTip = () => { tip.hidden = true; };
+
+function badge(level) {
+  const l = LEVEL[level] || LEVEL.missing;
+  return `<span class="badge lvl-${esc(level)}"><span aria-hidden="true">${l.icon}</span>${l.label}</span>`;
+}
+
+function renderStatus(d) {
+  const el = document.getElementById("status");
+  if (!d.latest) { el.innerHTML = `<p class="empty">No data yet. Run the workflow once, or a backfill, to populate the dashboard.</p>`; return; }
+  const v = d.latest.verdict;
+  el.innerHTML = `<div class="status">${badge(v.level)}
+    <div class="reason"><p><b>${esc(d.latest.date)}</b> (Irkutsk local day): ${esc(v.reason)}</p>
+    <p class="meta">Updated ${esc(new Date(d.generated_at).toLocaleString())}</p></div></div>`;
+}
+
+function renderIntraday(d) {
+  const it = d.intraday; if (!it || !it.airports || !Object.keys(it.airports).length) return;
+  const el = document.getElementById("intraday"); el.hidden = false;
+  const rows = Object.entries(it.airports).map(([c, a]) => `<tr><td>${esc(c)}</td><td>${esc(a.window[0].slice(11))}–${esc(a.window[1].slice(11))}</td>
+    <td class="num">${a.total}</td><td class="num">${a.cancelled}</td><td class="num">${pct(a.cancel_rate)}</td><td class="num">${pct(a.baseline_rate)}</td>
+    <td>${a.flagged ? badge("alert") : "–"}</td></tr>`).join("");
+  el.innerHTML = `<h2>Live check (±6 hours)</h2><p class="meta">Checked ${esc(new Date(it.checked_at).toLocaleString())}</p>
+    <div class="table-wrap"><table><tr><th>Airport</th><th>Local window</th><th class="num">Flights</th><th class="num">Cancelled</th><th class="num">Rate</th><th class="num">Usual</th><th>Flag</th></tr>${rows}</table></div>`;
+}
+
+function renderChart(code, ap, verdicts, isTarget) {
+  const days = ap.days.slice(-60);
+  const W = 520, H = 190, m = { t: 14, r: 8, b: 22, l: 30 };
+  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const max = Math.max(10, ...days.map(x => Math.max(x.total, x.baseline_total || 0)));
+  const nice = Math.ceil(max / 20) * 20;  // multiple of 20 so the 4 gridlines land on integers
+  const y = v => m.t + ih - (v / nice) * ih;
+  const step = iw / Math.max(days.length, 1);
+  const bw = Math.max(2, Math.min(10, step - 2));
+  const vmap = Object.fromEntries(verdicts.map(v => [v.date, v]));
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(ap.name)} daily flights">`;
+  s += `<g class="axis">`;
+  for (let i = 0; i <= 4; i++) {
+    const v = nice * i / 4, yy = y(v);
+    s += `<line x1="${m.l}" x2="${W - m.r}" y1="${yy}" y2="${yy}" stroke="var(--grid)"/>`;
+    s += `<text x="${m.l - 6}" y="${yy + 3}" text-anchor="end">${v}</text>`;
+  }
+  days.forEach((x, i) => { if (i % 10 === 0 || i === days.length - 1)
+    s += `<text x="${m.l + i * step + step / 2}" y="${H - 6}" text-anchor="middle">${x.date.slice(5)}</text>`; });
+  s += `</g>`;
+  days.forEach((x, i) => {
+    const cx = m.l + i * step + (step - bw) / 2;
+    const ok = x.total - x.cancelled;
+    const yOk = y(ok), yTop = y(x.total);
+    if (ok > 0) s += `<rect x="${cx}" y="${yOk}" width="${bw}" height="${m.t + ih - yOk}" fill="var(--flights)" ${x.cancelled ? "" : `rx="2"`}/>`;
+    if (x.cancelled > 0) s += `<rect x="${cx}" y="${yTop}" width="${bw}" height="${Math.max(1, yOk - yTop - (ok > 0 ? 2 : 0))}" fill="var(--cancelled)" rx="2"/>`;
+    const v = vmap[x.date];
+    if (isTarget && v && (v.level === "alert" || v.level === "watch"))
+      s += `<text x="${cx + bw / 2}" y="${yTop - 4}" text-anchor="middle" font-size="10" fill="var(--${v.level})">${LEVEL[v.level].icon}</text>`;
+  });
+  const pts = days.map((x, i) => x.baseline_total == null ? null : `${m.l + i * step + step / 2},${y(x.baseline_total)}`);
+  let seg = [];
+  const flush = () => { if (seg.length > 1) s += `<polyline points="${seg.join(" ")}" fill="none" stroke="var(--baseline)" stroke-width="1.5" stroke-dasharray="4 3"/>`; seg = []; };
+  pts.forEach(p => p ? seg.push(p) : flush()); flush();
+  days.forEach((x, i) => { s += `<rect class="hit" data-i="${i}" x="${m.l + i * step}" y="${m.t}" width="${step}" height="${ih}" fill="transparent"/>`; });
+  s += `</svg>`;
+  const last = days[days.length - 1];
+  const card = document.createElement("div");
+  card.innerHTML = `<div class="chart-head"><h2>${esc(ap.name)} (${esc(code)})${isTarget ? " · target" : " · control"}</h2>
+    <span>${last ? `${last.total} flights, ${last.cancelled} cancelled on ${esc(last.date.slice(5))}` : "no data"}</span></div>${s}`;
+  card.querySelectorAll(".hit").forEach(r => {
+    const x = days[+r.dataset.i];
+    r.addEventListener("mousemove", e => {
+      const v = vmap[x.date];
+      showTip(e, `<b>${esc(code)} · ${esc(x.date)}</b><br>${x.total} flights (usual ${x.baseline_total ?? "–"})<br>
+        ${x.cancelled} cancelled (${pct(x.total ? x.cancelled / x.total : 0)}, usual ${pct(x.baseline_rate)})<br>
+        ${x.unconfirmed} with no final status${x.flags.length ? `<br><b>Flags:</b> ${esc(x.flags.join(", "))}` : ""}
+        ${isTarget && v ? `<br><b>Verdict:</b> ${esc(LEVEL[v.level]?.label || v.level)}` : ""}`);
+    });
+    r.addEventListener("mouseleave", hideTip);
+  });
+  return card;
+}
+
+function renderLatest(d) {
+  const t = document.getElementById("latest");
+  const a = d.latest?.airports || {};
+  t.innerHTML = `<tr><th>Airport</th><th class="num">Flights</th><th class="num">vs usual</th><th class="num">Cancelled</th><th class="num">Rate</th><th class="num">Usual rate</th><th>Flags</th></tr>` +
+    Object.entries(a).map(([c, x]) => `<tr><td>${esc(d.airports[c]?.name)} (${esc(c)})</td>
+      <td class="num">${x.total ?? "–"}</td><td class="num">${pct(x.volume_ratio)}</td><td class="num">${x.cancelled ?? "–"}</td>
+      <td class="num">${pct(x.cancel_rate)}</td><td class="num">${pct(x.baseline_rate)}</td>
+      <td>${x.status === "learning" ? "building baseline" : esc((x.flags || []).join(", ") || "–")}</td></tr>`).join("");
+}
+
+function renderAlerts(d) {
+  const t = document.getElementById("alerts");
+  const log = (d.alert_log || []).slice().reverse();
+  t.innerHTML = log.length ? `<tr><th>Sent (UTC)</th><th>Notification</th><th class="num">Priority</th></tr>` +
+    log.map(x => `<tr><td>${esc(x.at.replace("T", " ").slice(0, 16))}</td><td>${esc(x.title)}</td><td class="num">${x.priority}</td></tr>`).join("")
+    : `<tr><td class="empty">No notifications sent yet.</td></tr>`;
+}
+
+fetch("data/summary.json", { cache: "no-store" }).then(r => r.ok ? r.json() : Promise.reject(r.status)).then(d => {
+  renderStatus(d); renderIntraday(d); renderLatest(d); renderAlerts(d);
+  const charts = document.getElementById("charts");
+  Object.entries(d.airports).forEach(([c, ap]) => charts.appendChild(renderChart(c, ap, d.verdicts || [], c === d.target)));
+  const th = d.thresholds;
+  document.getElementById("t-vol").textContent = pct(th.volume_drop_ratio);
+  document.getElementById("t-minc").textContent = th.min_cancellations;
+  document.getElementById("t-exc").textContent = Math.round(th.cancel_rate_excess * 100);
+  document.getElementById("budget").textContent = `API usage ${d.budget.month}: ${d.budget.units_used} of ${d.budget.limit} units.`;
+}).catch(() => {
+  document.getElementById("status").innerHTML = `<p class="empty">No data yet. Run the workflow once (Actions → Irkutsk flight watch → Run workflow) to populate the dashboard.</p>`;
+});
+</script>
+</body>
+</html>

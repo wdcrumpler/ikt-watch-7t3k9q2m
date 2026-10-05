@@ -1,0 +1,37 @@
+{
+  "_comment": "Edit airports/thresholds here. utc_offset is hours (Russia has no DST). The first airport is the target; the rest are regional controls used to tell 'Irkutsk-specific' apart from 'Siberian weather'.",
+  "target": "IKT",
+  "airports": {
+    "IKT": {"icao": "UIII", "name": "Irkutsk",     "utc_offset": 8},
+    "KJA": {"icao": "UNKL", "name": "Krasnoyarsk", "utc_offset": 7},
+    "UUD": {"icao": "UIUU", "name": "Ulan-Ude",    "utc_offset": 8}
+  },
+  "_optional_airports": {
+    "OVB": {"icao": "UNNT", "name": "Novosibirsk", "utc_offset": 7}
+  },
+
+  "monthly_unit_budget": 380,
+  "_budget_comment": "RapidAPI units. Each FIDS call = 2 units; one airport-day = 2 calls = 4 units. Free Basic plan = 400/month, Pro = 5000/month. The script refuses to make calls that would exceed this.",
+
+  "intraday": {
+    "enabled": false,
+    "airports": ["IKT", "KJA"],
+    "_comment": "Each intraday run costs 2 units per airport (one 12h window: 6h back, 6h ahead). Needs the Pro plan if run every 3h."
+  },
+
+  "thresholds": {
+    "baseline_days": 21,
+    "min_baseline_days": 7,
+    "volume_drop_ratio": 0.75,
+    "severe_volume_drop_ratio": 0.5,
+    "min_cancellations": 3,
+    "cancel_rate_excess": 0.10,
+    "severe_cancel_rate": 0.35,
+    "cancel_z": 3.0,
+    "intraday_min_cancellations": 4,
+    "intraday_cancel_rate_excess": 0.15
+  },
+
+  "heartbeat_weekday": 6,
+  "_heartbeat_comment": "0=Mon..6=Sun (Irkutsk local date of the day analysed). A low-priority 'still alive' summary is sent that day so silence never gets mistaken for 'all clear'."
+}

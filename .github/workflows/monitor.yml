@@ -1,0 +1,79 @@
+name: Irkutsk flight watch
+
+on:
+  schedule:
+    - cron: "15 18 * * *"   # daily: 02:15 Irkutsk time, analyses the previous Irkutsk day
+    - cron: "45 */3 * * *"  # intraday: no-op unless intraday.enabled = true in config.json
+    - cron: "0 6 * * 1"     # weekly data-feed health check (free endpoint)
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "What to run"
+        type: choice
+        default: daily
+        options: [daily, backfill, intraday, health, analyze, test-alert]
+      days:
+        description: "Backfill: number of past days"
+        default: "14"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: flight-watch
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+      NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+      NTFY_TOKEN: ${{ secrets.NTFY_TOKEN }}
+      DASHBOARD_URL: ${{ vars.DASHBOARD_URL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Pick mode
+        id: mode
+        run: |
+          case "${{ github.event.schedule }}" in
+            "15 18 * * *") echo "mode=daily" >> "$GITHUB_OUTPUT" ;;
+            "45 */3 * * *") echo "mode=intraday" >> "$GITHUB_OUTPUT" ;;
+            "0 6 * * 1") echo "mode=health" >> "$GITHUB_OUTPUT" ;;
+            *) echo "mode=${{ inputs.mode }}" >> "$GITHUB_OUTPUT" ;;
+          esac
+
+      - name: Run monitor
+        run: |
+          if [ "${{ steps.mode.outputs.mode }}" = "backfill" ]; then
+            python monitor.py backfill --days "${{ inputs.days }}"
+          else
+            python monitor.py "${{ steps.mode.outputs.mode }}"
+          fi
+
+      - name: Commit data
+        if: always()
+        run: |
+          git config user.name "flight-watch-bot"
+          git config user.email "flight-watch-bot@users.noreply.github.com"
+          git add docs/data state
+          if git diff --cached --quiet; then
+            echo "No data changes."
+          else
+            git commit -m "data: ${{ steps.mode.outputs.mode }} $(date -u +%Y-%m-%dT%H:%MZ)"
+            git pull --rebase --autostash
+            git push
+          fi
+
+      - name: Notify on failure
+        if: failure() && env.NTFY_TOPIC != ''
+        run: |
+          curl -s -H "Title: Irkutsk flight watch: run FAILED" -H "Priority: 3" -H "Tags: x" \
+            -d "The ${{ steps.mode.outputs.mode }} run failed. Logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            "https://ntfy.sh/$NTFY_TOPIC"
