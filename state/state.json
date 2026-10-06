@@ -1,1 +1,17 @@
-{}
+{
+  "budget": {
+    "month": "2026-10",
+    "units_used": 12
+  },
+  "rate_limit_headers": {
+    "x-ratelimit-api-units-limit": "400",
+    "x-ratelimit-api-units-remaining": "388",
+    "x-ratelimit-api-units-reset": "2580054",
+    "x-ratelimit-requests-limit": "1600",
+    "x-ratelimit-requests-remaining": "1594",
+    "x-ratelimit-requests-reset": "2580054",
+    "x-ratelimit-rapid-free-plans-hard-limit-limit": "500000",
+    "x-ratelimit-rapid-free-plans-hard-limit-remaining": "499994",
+    "x-ratelimit-rapid-free-plans-hard-limit-reset": "2580054"
+  }
+}
