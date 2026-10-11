@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-10T21:39:37+00:00",
+  "generated_at": "2026-10-11T21:54:42+00:00",
   "target": "IKT",
   "latest": {
-    "date": "2026-10-10",
+    "date": "2026-10-11",
     "verdict": {
       "level": "learning",
       "priority": 0,
@@ -12,19 +12,19 @@
       "IKT": {
         "status": "learning",
         "flags": [],
-        "total": 99,
-        "cancelled": 0
+        "total": 100,
+        "cancelled": 4
       },
       "KJA": {
         "status": "learning",
         "flags": [],
         "total": 95,
-        "cancelled": 6
+        "cancelled": 7
       },
       "UUD": {
         "status": "learning",
         "flags": [],
-        "total": 23,
+        "total": 28,
         "cancelled": 0
       }
     }
@@ -56,6 +56,12 @@
     },
     {
       "date": "2026-10-10",
+      "level": "learning",
+      "priority": 0,
+      "reason": "baseline still building"
+    },
+    {
+      "date": "2026-10-11",
       "level": "learning",
       "priority": 0,
       "reason": "baseline still building"
@@ -119,6 +125,17 @@
           "flags": [],
           "baseline_total": null,
           "baseline_rate": null
+        },
+        {
+          "date": "2026-10-11",
+          "total": 100,
+          "cancelled": 4,
+          "cancelled_uncertain": 0,
+          "operated": 34,
+          "unconfirmed": 62,
+          "flags": [],
+          "baseline_total": null,
+          "baseline_rate": null
         }
       ]
     },
@@ -176,6 +193,17 @@
           "cancelled_uncertain": 0,
           "operated": 89,
           "unconfirmed": 0,
+          "flags": [],
+          "baseline_total": null,
+          "baseline_rate": null
+        },
+        {
+          "date": "2026-10-11",
+          "total": 95,
+          "cancelled": 7,
+          "cancelled_uncertain": 0,
+          "operated": 84,
+          "unconfirmed": 4,
           "flags": [],
           "baseline_total": null,
           "baseline_rate": null
@@ -239,6 +267,17 @@
           "flags": [],
           "baseline_total": null,
           "baseline_rate": null
+        },
+        {
+          "date": "2026-10-11",
+          "total": 28,
+          "cancelled": 0,
+          "cancelled_uncertain": 0,
+          "operated": 28,
+          "unconfirmed": 0,
+          "flags": [],
+          "baseline_total": null,
+          "baseline_rate": null
         }
       ]
     }
@@ -247,7 +286,7 @@
   "alert_log": [],
   "budget": {
     "month": "2026-10",
-    "units_used": 60,
+    "units_used": 72,
     "limit": 380
   },
   "thresholds": {
