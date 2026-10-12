@@ -1,0 +1,65 @@
+{
+  "checked_at": "2026-10-12T13:36:52+00:00",
+  "airports": {
+    "IKT": {
+      "flightSchedulesFeed": {
+        "service": "FlightSchedules",
+        "status": "OK",
+        "minAvailableLocalDate": "2025-10-12",
+        "maxAvailableLocalDate": "2027-10-11"
+      },
+      "liveFlightUpdatesFeed": {
+        "service": "FlightLiveUpdates",
+        "status": "Unavailable"
+      },
+      "adsbUpdatesFeed": {
+        "service": "AdsbUpdates",
+        "status": "Unavailable"
+      },
+      "generalAvailability": {
+        "minAvailableLocalDate": "2025-10-12",
+        "maxAvailableLocalDate": "2027-10-11"
+      }
+    },
+    "KJA": {
+      "flightSchedulesFeed": {
+        "service": "FlightSchedules",
+        "status": "OKPartial",
+        "minAvailableLocalDate": "2025-10-12",
+        "maxAvailableLocalDate": "2027-03-28"
+      },
+      "liveFlightUpdatesFeed": {
+        "service": "FlightLiveUpdates",
+        "status": "OK"
+      },
+      "adsbUpdatesFeed": {
+        "service": "AdsbUpdates",
+        "status": "Unavailable"
+      },
+      "generalAvailability": {
+        "minAvailableLocalDate": "2025-10-12",
+        "maxAvailableLocalDate": "2027-03-28"
+      }
+    },
+    "UUD": {
+      "flightSchedulesFeed": {
+        "service": "FlightSchedules",
+        "status": "OK",
+        "minAvailableLocalDate": "2025-10-12",
+        "maxAvailableLocalDate": "2027-10-11"
+      },
+      "liveFlightUpdatesFeed": {
+        "service": "FlightLiveUpdates",
+        "status": "OK"
+      },
+      "adsbUpdatesFeed": {
+        "service": "AdsbUpdates",
+        "status": "Unavailable"
+      },
+      "generalAvailability": {
+        "minAvailableLocalDate": "2025-10-12",
+        "maxAvailableLocalDate": "2027-10-11"
+      }
+    }
+  }
+}

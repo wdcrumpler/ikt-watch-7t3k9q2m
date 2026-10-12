@@ -6,13 +6,13 @@
   "rate_limit_headers": {
     "x-ratelimit-api-units-limit": "400",
     "x-ratelimit-api-units-remaining": "330",
-    "x-ratelimit-api-units-reset": "2150673",
+    "x-ratelimit-api-units-reset": "2094137",
     "x-ratelimit-requests-limit": "1600",
-    "x-ratelimit-requests-remaining": "1571",
-    "x-ratelimit-requests-reset": "2150673",
+    "x-ratelimit-requests-remaining": "1564",
+    "x-ratelimit-requests-reset": "2094137",
     "x-ratelimit-rapid-free-plans-hard-limit-limit": "500000",
-    "x-ratelimit-rapid-free-plans-hard-limit-remaining": "499976",
-    "x-ratelimit-rapid-free-plans-hard-limit-reset": "2150673"
+    "x-ratelimit-rapid-free-plans-hard-limit-remaining": "499984",
+    "x-ratelimit-rapid-free-plans-hard-limit-reset": "2094137"
   },
   "sent_alerts": {
     "heartbeat:2026-10-11": "2026-10-11T21:54:42+00:00"
