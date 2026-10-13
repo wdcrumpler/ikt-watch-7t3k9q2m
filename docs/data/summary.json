@@ -1,31 +1,49 @@
 {
-  "generated_at": "2026-10-13T00:36:13+00:00",
+  "generated_at": "2026-10-13T22:41:27+00:00",
   "target": "IKT",
   "latest": {
-    "date": "2026-10-12",
+    "date": "2026-10-13",
     "verdict": {
-      "level": "learning",
+      "level": "normal",
       "priority": 0,
-      "reason": "baseline still building"
+      "reason": "within baseline"
     },
     "airports": {
       "IKT": {
-        "status": "learning",
+        "status": "normal",
         "flags": [],
-        "total": 104,
-        "cancelled": 1
+        "severe": false,
+        "total": 102,
+        "cancelled": 0,
+        "cancel_rate": 0.0,
+        "baseline_total": 100,
+        "baseline_rate": 0.0,
+        "volume_ratio": 1.02,
+        "cancel_z": 0.0
       },
       "KJA": {
-        "status": "learning",
+        "status": "normal",
         "flags": [],
+        "severe": false,
         "total": 100,
-        "cancelled": 13
+        "cancelled": 8,
+        "cancel_rate": 0.08,
+        "baseline_total": 95,
+        "baseline_rate": 0.063,
+        "volume_ratio": 1.05,
+        "cancel_z": 0.5
       },
       "UUD": {
-        "status": "learning",
+        "status": "normal",
         "flags": [],
-        "total": 18,
-        "cancelled": 0
+        "severe": false,
+        "total": 25,
+        "cancelled": 0,
+        "cancel_rate": 0.0,
+        "baseline_total": 23,
+        "baseline_rate": 0.0,
+        "volume_ratio": 1.09,
+        "cancel_z": 0.0
       }
     }
   },
@@ -71,6 +89,12 @@
       "level": "learning",
       "priority": 0,
       "reason": "baseline still building"
+    },
+    {
+      "date": "2026-10-13",
+      "level": "normal",
+      "priority": 0,
+      "reason": "within baseline"
     }
   ],
   "airports": {
@@ -153,6 +177,17 @@
           "flags": [],
           "baseline_total": null,
           "baseline_rate": null
+        },
+        {
+          "date": "2026-10-13",
+          "total": 102,
+          "cancelled": 0,
+          "cancelled_uncertain": 0,
+          "operated": 29,
+          "unconfirmed": 73,
+          "flags": [],
+          "baseline_total": 100,
+          "baseline_rate": 0.0
         }
       ]
     },
@@ -235,6 +270,17 @@
           "flags": [],
           "baseline_total": null,
           "baseline_rate": null
+        },
+        {
+          "date": "2026-10-13",
+          "total": 100,
+          "cancelled": 8,
+          "cancelled_uncertain": 0,
+          "operated": 88,
+          "unconfirmed": 4,
+          "flags": [],
+          "baseline_total": 95,
+          "baseline_rate": 0.063
         }
       ]
     },
@@ -317,6 +363,17 @@
           "flags": [],
           "baseline_total": null,
           "baseline_rate": null
+        },
+        {
+          "date": "2026-10-13",
+          "total": 25,
+          "cancelled": 0,
+          "cancelled_uncertain": 0,
+          "operated": 25,
+          "unconfirmed": 0,
+          "flags": [],
+          "baseline_total": 23,
+          "baseline_rate": 0.0
         }
       ]
     }
@@ -332,7 +389,7 @@
   ],
   "budget": {
     "month": "2026-10",
-    "units_used": 84,
+    "units_used": 96,
     "limit": 380
   },
   "thresholds": {
