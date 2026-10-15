@@ -1,18 +1,18 @@
 {
   "budget": {
     "month": "2026-10",
-    "units_used": 108
+    "units_used": 120
   },
   "rate_limit_headers": {
-    "x-ratelimit-rapid-free-plans-hard-limit-limit": "500000",
-    "x-ratelimit-rapid-free-plans-hard-limit-remaining": "499964",
-    "x-ratelimit-rapid-free-plans-hard-limit-reset": "1892447",
-    "x-ratelimit-api-units-limit": "400",
-    "x-ratelimit-api-units-remaining": "294",
-    "x-ratelimit-api-units-reset": "1892447",
     "x-ratelimit-requests-limit": "1600",
-    "x-ratelimit-requests-remaining": "1545",
-    "x-ratelimit-requests-reset": "1892447"
+    "x-ratelimit-requests-remaining": "1539",
+    "x-ratelimit-requests-reset": "1807151",
+    "x-ratelimit-api-units-limit": "400",
+    "x-ratelimit-api-units-remaining": "282",
+    "x-ratelimit-api-units-reset": "1807151",
+    "x-ratelimit-rapid-free-plans-hard-limit-limit": "500000",
+    "x-ratelimit-rapid-free-plans-hard-limit-remaining": "499958",
+    "x-ratelimit-rapid-free-plans-hard-limit-reset": "1807151"
   },
   "sent_alerts": {
     "heartbeat:2026-10-11": "2026-10-11T21:54:42+00:00"
