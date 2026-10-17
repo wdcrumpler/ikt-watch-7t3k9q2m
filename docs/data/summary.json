@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-16T21:04:04+00:00",
+  "generated_at": "2026-10-17T20:33:25+00:00",
   "target": "IKT",
   "latest": {
-    "date": "2026-10-16",
+    "date": "2026-10-17",
     "verdict": {
       "level": "normal",
       "priority": 0,
@@ -13,37 +13,37 @@
         "status": "normal",
         "flags": [],
         "severe": false,
-        "total": 99,
-        "cancelled": 2,
-        "cancel_rate": 0.02,
-        "baseline_total": 99.5,
+        "total": 100,
+        "cancelled": 3,
+        "cancel_rate": 0.03,
+        "baseline_total": 99,
         "baseline_rate": 0.0,
-        "volume_ratio": 0.99,
-        "cancel_z": 1.0
+        "volume_ratio": 1.01,
+        "cancel_z": 1.5
       },
       "KJA": {
         "status": "normal",
         "flags": [],
         "severe": false,
-        "total": 95,
-        "cancelled": 11,
-        "cancel_rate": 0.116,
-        "baseline_total": 96.5,
-        "baseline_rate": 0.057,
-        "volume_ratio": 0.98,
-        "cancel_z": 2.3
+        "total": 107,
+        "cancelled": 9,
+        "cancel_rate": 0.084,
+        "baseline_total": 95,
+        "baseline_rate": 0.063,
+        "volume_ratio": 1.13,
+        "cancel_z": 0.7
       },
       "UUD": {
         "status": "normal",
         "flags": [],
         "severe": false,
         "total": 24,
-        "cancelled": 2,
-        "cancel_rate": 0.083,
-        "baseline_total": 22.0,
+        "cancelled": 0,
+        "cancel_rate": 0.0,
+        "baseline_total": 23,
         "baseline_rate": 0.0,
-        "volume_ratio": 1.09,
-        "cancel_z": 2.9
+        "volume_ratio": 1.04,
+        "cancel_z": 0.0
       }
     }
   },
@@ -110,6 +110,12 @@
     },
     {
       "date": "2026-10-16",
+      "level": "normal",
+      "priority": 0,
+      "reason": "within baseline"
+    },
+    {
+      "date": "2026-10-17",
       "level": "normal",
       "priority": 0,
       "reason": "within baseline"
@@ -239,6 +245,17 @@
           "flags": [],
           "baseline_total": 99.5,
           "baseline_rate": 0.0
+        },
+        {
+          "date": "2026-10-17",
+          "total": 100,
+          "cancelled": 3,
+          "cancelled_uncertain": 0,
+          "operated": 31,
+          "unconfirmed": 66,
+          "flags": [],
+          "baseline_total": 99,
+          "baseline_rate": 0.0
         }
       ]
     },
@@ -365,6 +382,17 @@
           "flags": [],
           "baseline_total": 96.5,
           "baseline_rate": 0.057
+        },
+        {
+          "date": "2026-10-17",
+          "total": 107,
+          "cancelled": 9,
+          "cancelled_uncertain": 0,
+          "operated": 97,
+          "unconfirmed": 1,
+          "flags": [],
+          "baseline_total": 95,
+          "baseline_rate": 0.063
         }
       ]
     },
@@ -493,6 +521,17 @@
           "flags": [],
           "baseline_total": 22.0,
           "baseline_rate": 0.0
+        },
+        {
+          "date": "2026-10-17",
+          "total": 24,
+          "cancelled": 0,
+          "cancelled_uncertain": 0,
+          "operated": 24,
+          "unconfirmed": 0,
+          "flags": [],
+          "baseline_total": 23,
+          "baseline_rate": 0.0
         }
       ]
     }
@@ -508,7 +547,7 @@
   ],
   "budget": {
     "month": "2026-10",
-    "units_used": 132,
+    "units_used": 144,
     "limit": 380
   },
   "thresholds": {
