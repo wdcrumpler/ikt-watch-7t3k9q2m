@@ -1,26 +1,33 @@
 {
   "budget": {
     "month": "2026-10",
-    "units_used": 144
+    "units_used": 156
   },
   "rate_limit_headers": {
-    "x-ratelimit-api-units-limit": "400",
-    "x-ratelimit-api-units-remaining": "258",
-    "x-ratelimit-api-units-reset": "1637149",
-    "x-ratelimit-rapid-free-plans-hard-limit-limit": "500000",
-    "x-ratelimit-rapid-free-plans-hard-limit-remaining": "499946",
-    "x-ratelimit-rapid-free-plans-hard-limit-reset": "1637149",
     "x-ratelimit-requests-limit": "1600",
-    "x-ratelimit-requests-remaining": "1527",
-    "x-ratelimit-requests-reset": "1637149"
+    "x-ratelimit-requests-remaining": "1529",
+    "x-ratelimit-requests-reset": "1550489",
+    "x-ratelimit-rapid-free-plans-hard-limit-limit": "500000",
+    "x-ratelimit-rapid-free-plans-hard-limit-remaining": "499993",
+    "x-ratelimit-rapid-free-plans-hard-limit-reset": "1550489",
+    "x-ratelimit-api-units-limit": "400",
+    "x-ratelimit-api-units-remaining": "246",
+    "x-ratelimit-api-units-reset": "1550489"
   },
   "sent_alerts": {
-    "heartbeat:2026-10-11": "2026-10-11T21:54:42+00:00"
+    "heartbeat:2026-10-11": "2026-10-11T21:54:42+00:00",
+    "heartbeat:2026-10-18": "2026-10-18T20:37:46+00:00"
   },
   "alert_log": [
     {
       "at": "2026-10-11T21:54:42+00:00",
       "key": "heartbeat:2026-10-11",
+      "title": "Irkutsk flight watch: weekly check-in",
+      "priority": 1
+    },
+    {
+      "at": "2026-10-18T20:37:46+00:00",
+      "key": "heartbeat:2026-10-18",
       "title": "Irkutsk flight watch: weekly check-in",
       "priority": 1
     }
