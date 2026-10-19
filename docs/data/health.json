@@ -1,12 +1,12 @@
 {
-  "checked_at": "2026-10-12T13:36:52+00:00",
+  "checked_at": "2026-10-19T11:20:30+00:00",
   "airports": {
     "IKT": {
       "flightSchedulesFeed": {
         "service": "FlightSchedules",
         "status": "OK",
-        "minAvailableLocalDate": "2025-10-12",
-        "maxAvailableLocalDate": "2027-10-11"
+        "minAvailableLocalDate": "2025-10-19",
+        "maxAvailableLocalDate": "2027-10-17"
       },
       "liveFlightUpdatesFeed": {
         "service": "FlightLiveUpdates",
@@ -17,15 +17,15 @@
         "status": "Unavailable"
       },
       "generalAvailability": {
-        "minAvailableLocalDate": "2025-10-12",
-        "maxAvailableLocalDate": "2027-10-11"
+        "minAvailableLocalDate": "2025-10-19",
+        "maxAvailableLocalDate": "2027-10-17"
       }
     },
     "KJA": {
       "flightSchedulesFeed": {
         "service": "FlightSchedules",
         "status": "OKPartial",
-        "minAvailableLocalDate": "2025-10-12",
+        "minAvailableLocalDate": "2025-10-19",
         "maxAvailableLocalDate": "2027-03-28"
       },
       "liveFlightUpdatesFeed": {
@@ -37,7 +37,7 @@
         "status": "Unavailable"
       },
       "generalAvailability": {
-        "minAvailableLocalDate": "2025-10-12",
+        "minAvailableLocalDate": "2025-10-19",
         "maxAvailableLocalDate": "2027-03-28"
       }
     },
@@ -45,8 +45,8 @@
       "flightSchedulesFeed": {
         "service": "FlightSchedules",
         "status": "OK",
-        "minAvailableLocalDate": "2025-10-12",
-        "maxAvailableLocalDate": "2027-10-11"
+        "minAvailableLocalDate": "2025-10-19",
+        "maxAvailableLocalDate": "2027-10-17"
       },
       "liveFlightUpdatesFeed": {
         "service": "FlightLiveUpdates",
@@ -57,8 +57,8 @@
         "status": "Unavailable"
       },
       "generalAvailability": {
-        "minAvailableLocalDate": "2025-10-12",
-        "maxAvailableLocalDate": "2027-10-11"
+        "minAvailableLocalDate": "2025-10-19",
+        "maxAvailableLocalDate": "2027-10-17"
       }
     }
   }
