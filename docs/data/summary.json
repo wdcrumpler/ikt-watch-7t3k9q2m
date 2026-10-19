@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-18T20:37:45+00:00",
+  "generated_at": "2026-10-19T22:19:14+00:00",
   "target": "IKT",
   "latest": {
     "date": "2026-10-18",
@@ -580,6 +580,12 @@
     {
       "at": "2026-10-11T21:54:42+00:00",
       "key": "heartbeat:2026-10-11",
+      "title": "Irkutsk flight watch: weekly check-in",
+      "priority": 1
+    },
+    {
+      "at": "2026-10-18T20:37:46+00:00",
+      "key": "heartbeat:2026-10-18",
       "title": "Irkutsk flight watch: weekly check-in",
       "priority": 1
     }

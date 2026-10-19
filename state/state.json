@@ -16,7 +16,8 @@
   },
   "sent_alerts": {
     "heartbeat:2026-10-11": "2026-10-11T21:54:42+00:00",
-    "heartbeat:2026-10-18": "2026-10-18T20:37:46+00:00"
+    "heartbeat:2026-10-18": "2026-10-18T20:37:46+00:00",
+    "errors:2026-10-19": "2026-10-19T22:19:14+00:00"
   },
   "alert_log": [
     {
@@ -30,6 +31,12 @@
       "key": "heartbeat:2026-10-18",
       "title": "Irkutsk flight watch: weekly check-in",
       "priority": 1
+    },
+    {
+      "at": "2026-10-19T22:19:14+00:00",
+      "key": "errors:2026-10-19",
+      "title": "Irkutsk flight watch: fetch problems",
+      "priority": 3
     }
   ]
 }
